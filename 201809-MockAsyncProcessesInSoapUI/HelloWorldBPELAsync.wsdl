@@ -1,0 +1,55 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/ReadyAPIHellloWorldSamples/helloWorldBPELAsync/BPELProcessAsync" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="BPELProcessAsync" targetNamespace="http://xmlns.oracle.com/ReadyAPIHellloWorldSamples/helloWorldBPELAsync/BPELProcessAsync">
+
+	<plnk:partnerLinkType name="BPELProcessAsync">
+		<plnk:role name="BPELProcessAsyncRequester" portType="client:BPELProcessAsyncCallback"/>
+		<plnk:role name="BPELProcessAsyncProvider" portType="client:BPELProcessAsync"/>
+	</plnk:partnerLinkType>
+	<wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" wsu:Id="wsaddr_policy">
+		<wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"/>
+	</wsp:Policy>
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="http://xmlns.oracle.com/ReadyAPIHellloWorldSamples/helloWorldBPELAsync/BPELProcessAsync" schemaLocation="BPELProcessAsync.xsd"/>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="BPELProcessAsyncRequestMessage">
+		<wsdl:part name="payload" element="client:process"/>
+	</wsdl:message>
+	<wsdl:message name="BPELProcessAsyncResponseMessage">
+		<wsdl:part name="payload" element="client:processResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="BPELProcessAsync">
+		<wsdl:operation name="process">
+			<wsdl:input message="client:BPELProcessAsyncRequestMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="BPELProcessAsyncCallback">
+		<wsdl:operation name="processResponse">
+			<wsdl:input message="client:BPELProcessAsyncResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="BPELProcessAsyncBinding" type="client:BPELProcessAsync">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#wsaddr_policy" wsdl:required="false"/>
+		<wsdl:operation name="process">
+			<soap:operation style="document" soapAction="process"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="BPELProcessAsyncCallbackBinding" type="client:BPELProcessAsyncCallback">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="processResponse">
+			<soap:operation style="document" soapAction="processResponse"/>
+			<wsdl:input>
+				<soap:body use="literal" namespace="http://xmlns.oracle.com/ReadyAPIHellloWorldSamples/helloWorldBPELAsync/BPELProcessAsync"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="bpelprocessasync_client_ep">
+		<wsdl:port name="BPELProcessAsync_pt" binding="client:BPELProcessAsyncBinding">
+			<soap:address location="http://localhost:7101/soa-infra/services/default/helloWorldBPELAsync/bpelprocessasync_client_ep"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ns0:file xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ns0="aap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="aap file:/C:/Data/JDeveloper/SOA/mywork/MigrationUtils/Prepare11gProjects/xsd/file.xsd">
+   <ns0:path>c:\Data\svn\INDIGO12c\INT\SOA\trunk\Keten\RvdR\OntvangenRvdRBericht\OntvangenRVDRBericht.jpr</ns0:path>
+   <ns0:posFilename>0</ns0:posFilename>
+   <ns0:filename/>
+   <ns0:posSubfolder/>
+   <ns0:subfolder/>
+</ns0:file>

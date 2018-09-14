@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="aap" targetNamespace="aap"
+            elementFormDefault="qualified">
+  <xsd:element name="file">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="path" type="xsd:string"/>
+        <xsd:element name="posFilename" type="xsd:decimal" />
+        <xsd:element name="filename" type="xsd:string" />
+        <xsd:element name="posSubfolder" type="xsd:decimal" />
+        <xsd:element name="subfolder" type="xsd:string" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

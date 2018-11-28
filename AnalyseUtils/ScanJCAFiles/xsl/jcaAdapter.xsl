@@ -51,6 +51,19 @@
               <PayloadType>
                 <xsl:value-of select="/ns0:adapter-config/ns0:endpoint-interaction/ns0:interaction-spec/ns0:property[@name='PayloadType']/@value"/>
               </PayloadType>
+              <QueueName>
+                <xsl:value-of select="/ns0:adapter-config/ns0:endpoint-interaction/ns0:interaction-spec/ns0:property[@name='QueueName']/@value"/>
+              </QueueName>
+              <ObjectFieldName>
+                <xsl:value-of select="/ns0:adapter-config/ns0:endpoint-interaction/ns0:interaction-spec/ns0:property[@name='ObjectFieldName']/@value"/>
+              </ObjectFieldName>
+              <PayloadHeaderRequired>
+                <xsl:value-of select="/ns0:adapter-config/ns0:endpoint-interaction/ns0:interaction-spec/ns0:property[@name='PayloadHeaderRequired']/@value"/>
+              </PayloadHeaderRequired>
+              <RecipientList>
+                <xsl:value-of select="/ns0:adapter-config/ns0:endpoint-interaction/ns0:interaction-spec/ns0:property[@name='RecipientList']/@value"/>
+              </RecipientList>
+              <Consumer/>
             </spec>
           </endpoint>
         </xsl:when>
@@ -73,6 +86,19 @@
               <PayloadType>
                 <xsl:value-of select="/ns0:adapter-config/ns0:endpoint-activation/ns0:activation-spec/ns0:property[@name='PayloadType']/@value"/>
               </PayloadType>
+              <QueueName>
+                <xsl:value-of select="/ns0:adapter-config/ns0:endpoint-activation/ns0:activation-spec/ns0:property[@name='QueueName']/@value"/>
+              </QueueName>
+              <ObjectFieldName>
+                <xsl:value-of select="/ns0:adapter-config/ns0:endpoint-activation/ns0:activation-spec/ns0:property[@name='ObjectFieldName']/@value"/>
+              </ObjectFieldName>
+              <PayloadHeaderRequired>
+                <xsl:value-of select="/ns0:adapter-config/ns0:endpoint-activation/ns0:activation-spec/ns0:property[@name='PayloadHeaderRequired']/@value"/>
+              </PayloadHeaderRequired>
+              <RecipientList/>
+              <Consumer>
+                <xsl:value-of select="/ns0:adapter-config/ns0:endpoint-activation/ns0:activation-spec/ns0:property[@name='Consumer']/@value"/>
+              </Consumer>
             </spec>
           </endpoint>
         </xsl:when>

@@ -1,0 +1,109 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Wed Jun 17 10:52:42 CEST 2020
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="ProcessCustomer"
+               targetNamespace="http://xmlns.oracle.com/CorrelationDemo/CorrelationDemo/ProcessCustomer"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/CorrelationDemo/CorrelationDemo/ProcessCustomer"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/file/CorrelationDemo/CorrelationDemo/customerIn"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/file/CorrelationDemo/CorrelationDemo/customerOut"
+         xmlns:ns3="http://xmlns.darwin-it.nl/xsd/demo/Customer" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:ns4="http://oracle.com/sca/soapservice/CorrelationDemo/CorrelationDemo/Customer"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns5="http://xmlns.oracle.com/CorrelationDemo/CorrelationDemo/ProcessCustomer/correlationset">
+
+  <!--
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC
+     Set of activities coordinating the flow of messages across the
+     services integrated within this business process
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <bpelx:annotation>
+    <bpelx:analysis>
+      <bpelx:property name="propertiesFile">
+        <![CDATA[../WSDLs/ProcessCustomer_properties.wsdl]]>
+      </bpelx:property>
+    </bpelx:analysis>
+  </bpelx:annotation>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/file/CorrelationDemo/CorrelationDemo/customerIn"
+          location="../WSDLs/customerIn.wsdl" importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <partnerLinks>
+    <partnerLink name="customerIn" partnerLinkType="ns1:Read_plt" myRole="Read_role"/>
+    <partnerLink name="customerOut" partnerLinkType="ns2:Write_plt" partnerRole="Write_role"/>
+    <partnerLink name="UpdateCustomer" partnerLinkType="ns4:UpdateCustomer" myRole="customer_ptt"/>
+  </partnerLinks>
+  <variables>
+    <variable name="ReceiveCustomer_Read_InputVariable" messageType="ns1:Read_msg"/>
+    <variable name="Invoke_WriteCustomerOut_Write_InputVariable" messageType="ns2:Write_msg"/>
+    <variable name="Receive_UpdateCustomer_update_InputVariable" messageType="ns4:requestMessage"/>
+  </variables>
+  <correlationSets>
+    <correlationSet name="CustomerCS" properties="ns5:customerId"/>
+  </correlationSets>
+  <sequence name="main">
+    <receive name="ReceiveCustomer" partnerLink="customerIn" portType="ns1:Read_ptt" operation="Read"
+             variable="ReceiveCustomer_Read_InputVariable" createInstance="yes">
+      <correlations>
+        <correlation set="CustomerCS" initiate="yes"/>
+      </correlations>
+    </receive>
+    <scope name="ProcessCustomer">
+      <faultHandlers>
+        <catch faultName="client:Finished" bpelx:name="CatchFinished">
+          <empty name="QuitFromProcessing"/>
+        </catch>
+      </faultHandlers>
+      <flow name="FlowProcessAndWait">
+        <sequence name="UpdateCustomer">
+          <receive name="Receive_UpdateCustomer" partnerLink="UpdateCustomer" portType="ns4:customer_ptt"
+                   operation="update" variable="Receive_UpdateCustomer_update_InputVariable">
+            <correlations>
+              <correlation set="CustomerCS" initiate="no"/>
+            </correlations>
+          </receive>
+          <assign name="AssignUpdatedCustomer" xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy>
+              <from>$Receive_UpdateCustomer_update_InputVariable.part1</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke_WriteCustomerOut_Write_InputVariable.body</to>
+            </copy>
+          </assign>
+        </sequence>
+        <sequence name="LongRunningProcess">
+          <assign name="AssignInputCustomer">
+            <copy>
+              <from>$ReceiveCustomer_Read_InputVariable.body</from>
+              <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$Invoke_WriteCustomerOut_Write_InputVariable.body</to>
+            </copy>
+          </assign>
+          <wait name="WaitFor5Minutes">
+            <for>'PT5M'</for>
+          </wait>
+          <throw name="ThrowFinished" faultName="client:Finished"/>
+        </sequence>
+      </flow>
+    </scope>
+    <invoke name="Invoke_WriteCustomerOut" bpelx:invokeAsDetail="no" partnerLink="customerOut"
+            portType="ns2:Write_ptt" operation="Write" inputVariable="Invoke_WriteCustomerOut_Write_InputVariable"/>
+  </sequence>
+</process>

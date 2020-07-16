@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cmr="http://xmlns.darwin-it.nl/xsd/demo/Customer"
+            targetNamespace="http://xmlns.darwin-it.nl/xsd/demo/Customer" elementFormDefault="qualified">
+  <xsd:element name="customer" type="cmr:CustomerType">
+    <xsd:annotation>
+      <xsd:documentation>A customer</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType name="CustomerType">
+    <xsd:sequence>
+      <xsd:element name="id" maxOccurs="1" type="xsd:string"/>
+      <xsd:element name="firstName" maxOccurs="1" type="xsd:string"/>
+      <xsd:element name="lastName" maxOccurs="1" type="xsd:string"/>
+      <xsd:element name="lastNamePrefixes" maxOccurs="1" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="gender" maxOccurs="1" type="xsd:string"/>
+      <xsd:element name="streetName" maxOccurs="1" type="xsd:string"/>
+      <xsd:element name="houseNumber" maxOccurs="1" type="xsd:string"/>
+      <xsd:element name="country" maxOccurs="1" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

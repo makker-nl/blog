@@ -1,0 +1,46 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="customerIn"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/file/CorrelationDemo/CorrelationDemo/customerIn"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/file/CorrelationDemo/CorrelationDemo/customerIn"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:pc="http://xmlns.oracle.com/pcbpel/"
+     xmlns:imp1="http://xmlns.darwin-it.nl/xsd/demo/Customer"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:cor="http://xmlns.oracle.com/CorrelationDemo/CorrelationDemo/ProcessCustomer/correlationset"
+     xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+     xmlns:ns="http://oracle.com/sca/soapservice/CorrelationDemo/CorrelationDemo/Customer"
+    >
+    <plt:partnerLinkType name="Read_plt">
+        <plt:role name="Read_role">
+            <plt:portType name="tns:Read_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <vprop:propertyAlias propertyName="cor:customerId" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/file/CorrelationDemo/CorrelationDemo/customerIn"
+         messageType="tns:Read_msg" part="body">
+        <vprop:query>imp1:id</vprop:query>
+    </vprop:propertyAlias>
+    <vprop:propertyAlias propertyName="cor:customerId" xmlns:ns13="http://oracle.com/sca/soapservice/CorrelationDemo/CorrelationDemo/Customer"
+         messageType="ns13:requestMessage" part="part1">
+        <vprop:query>imp1:id</vprop:query>
+    </vprop:propertyAlias>
+    <wsdl:import namespace="http://oracle.com/sca/soapservice/CorrelationDemo/CorrelationDemo/Customer"
+         location="Customer.wsdl"/>
+    <wsdl:import namespace="http://xmlns.oracle.com/CorrelationDemo/CorrelationDemo/ProcessCustomer/correlationset"
+         location="ProcessCustomer_properties.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.darwin-it.nl/xsd/demo/Customer" schemaLocation="../Schemas/Customer.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="Read_msg">
+        <wsdl:part name="body" element="imp1:customer"/>
+    </wsdl:message>
+    <wsdl:portType name="Read_ptt">
+        <wsdl:operation name="Read">
+            <wsdl:input message="tns:Read_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

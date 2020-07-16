@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Body xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <know:SF560ZettenVanEigenschappenVanIndicatiesServiceRequest xmlns:know="http://schemas.beinformed.nl/beinformed/v3/services/knowledgeservice">
+    <header xmlns="http://schemas.beinformed.nl/beinformed/v3/services/knowledgeservice">
+      <clientReference>SADMINCAFC2DF0-1898-4a4f-A840-A183F3BBECD3</clientReference>
+      <referenceDate>2019-07-04</referenceDate>
+    </header>
+    <context xmlns="http://schemas.beinformed.nl/beinformed/v3/services/knowledgeservice">
+      <attribute>
+        <key>BrexitSwitch</key>
+        <value>Deal</value>
+      </attribute>
+      <attribute></attribute>
+    </context>
+  </know:SF560ZettenVanEigenschappenVanIndicatiesServiceRequest>
+</SOAP-ENV:Body>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<customer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://xmlns.darwin-it.nl/xsd/demo/Customer ../Schemas/Customer.xsd"
+          xmlns="http://xmlns.darwin-it.nl/xsd/demo/Customer">
+  <id>1001</id>
+  <firstName>Jean-Michel</firstName>
+  <lastName>Jarre</lastName>  
+  <gender>M</gender>
+  <streetName>Rue d'Oxygene</streetName>
+  <houseNumber>4</houseNumber>
+  <country>Paris</country>
+</customer>

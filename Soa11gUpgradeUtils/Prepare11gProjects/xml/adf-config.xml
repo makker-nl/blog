@@ -2,7 +2,11 @@
 <adf-config xmlns="http://xmlns.oracle.com/adf/config" xmlns:adf="http://xmlns.oracle.com/adf/config/properties"
             xmlns:sec="http://xmlns.oracle.com/adf/security/config">
   <adf:adf-properties-child xmlns="http://xmlns.oracle.com/adf/config/properties">
+<<<<<<< HEAD
     <adf-property name="adfAppUID" value="Hatseflats-5507"/>
+=======
+    <adf-property name="adfAppUID" value="OMZIS_DossierService-5507"/>
+>>>>>>> 3c021ca4fd49841ea4a9656afd3aa502f6ef613b
   </adf:adf-properties-child>
   <sec:adf-security-child xmlns="http://xmlns.oracle.com/adf/security/config">
     <CredentialStoreContext credentialStoreClass="oracle.adf.share.security.providers.jps.CSFCredentialStore"

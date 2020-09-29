@@ -1,0 +1,114 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Sep 29 13:14:47 CEST 2020
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="SOALoggingBPEL" targetNamespace="http://xmlns.darwin-it.nl/SOALoggingDemo/SOALoggingBPEL/SOALoggingBPEL"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.darwin-it.nl/SOALoggingDemo/SOALoggingBPEL/SOALoggingBPEL"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ess="http://xmlns.oracle.com/scheduler" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+  <import ui:processWSDL="true" namespace="http://xmlns.darwin-it.nl/SOALoggingDemo/SOALoggingBPEL/SOALoggingBPEL"
+          location="../WSDLs/SOALoggingBPEL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <import location="nl.darwinit.soautils.logging.Log" importType="http://schemas.oracle.com/bpel/extension/java"/>
+  <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="soaloggingbpel_client" partnerLinkType="client:SOALoggingBPEL" myRole="SOALoggingBPELProvider"/>
+  </partnerLinks>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:SOALoggingBPELRequestMessage"/>
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:SOALoggingBPELResponseMessage"/>
+  </variables>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in SOALoggingBPEL.wsdl) -->
+    <receive name="receiveInput" partnerLink="soaloggingbpel_client" portType="client:SOALoggingBPEL"
+             operation="process" variable="inputVariable" createInstance="yes"/>
+    <scope name="LogStart">
+      <variables>
+        <variable name="compositeName" type="xsd:string"/>
+        <variable name="componentName" type="xsd:string"/>
+        <variable name="text" type="xsd:string"/>
+        <variable name="methodName" type="xsd:string"/>
+      </variables>
+      <sequence name="LogStart">
+        <assign name="SetLogAttributes">
+          <copy>
+            <from>ora:getCompositeName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$compositeName</to>
+          </copy>
+          <copy>
+            <from>ora:getComponentName()</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$componentName</to>
+          </copy>
+          <copy>
+            <from>"Start of the process..."</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$text</to>
+          </copy>
+          <copy>
+            <from>"LogStart"</from>
+            <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$methodName</to>
+          </copy>
+        </assign>
+        <extensionActivity>
+          <bpelx:exec name="Log">
+            <![CDATA[String compositeName = (String) getVariableData("compositeName");      
+String componentName = (String) getVariableData("componentName");      
+String text = (String) getVariableData("text");      
+String methodName= (String) getVariableData("methodName");      
+Log log = new Log("oracle.soa.bpel."+compositeName+"."+componentName);     
+  
+String message="**** BPEL "+methodName +" " + text +" ****";    
+log.info(methodName, message);    
+addAuditTrailEntry(message);]]>
+          </bpelx:exec>
+        </extensionActivity>
+      </sequence>
+    </scope>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="soaloggingbpel_client" portType="client:SOALoggingBPEL" operation="process"
+           variable="outputVariable"/>
+  </sequence>
+</process>

@@ -98,7 +98,7 @@
 String componentName = (String) getVariableData("componentName");      
 String text = (String) getVariableData("text");      
 String methodName= (String) getVariableData("methodName");      
-Log log = new Log("oracle.soa.bpel."+compositeName+"."+componentName);     
+Log log = new Log(compositeName,componentName);     
   
 String message="**** BPEL "+methodName +" " + text +" ****";    
 log.info(methodName, message);    

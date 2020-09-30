@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 
 public class Log {
+    private static final String BASE_PACKAGE="oracle.soa.bpel";
     private static Logger log;
     private String className;
     private boolean toConsole = false;
@@ -46,6 +47,13 @@ public class Log {
     
     public Log(String loggingClass) {
         super();
+        setClassName(loggingClass);
+        log = Logger.getLogger(getClassName());
+    }
+
+    public Log(String compositeName, String componentName) {
+        super();
+        String loggingClass = BASE_PACKAGE+"."+compositeName+"."+componentName;             
         setClassName(loggingClass);
         log = Logger.getLogger(getClassName());
     }

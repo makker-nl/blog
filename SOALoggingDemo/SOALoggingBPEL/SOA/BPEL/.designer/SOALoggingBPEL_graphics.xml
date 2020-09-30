@@ -4,13 +4,11 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="soaloggingbpel_client" x="0" y="295" side="left"/>
+      <partnerlink name="soaloggingbpel_client" x="0" y="239" side="left"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,150,968,364" show_swimlanes="true">
+   <graph_layout viewport="0,0,833,496" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
-      <layout_item collapsed="false" xpath="/process/sequence/scope" type="scope" showhandlers="true"/>
-      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence" type="sequence"/>
    </graph_layout>
    <bookmarks/>
 </graphics>

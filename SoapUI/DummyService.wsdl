@@ -1,0 +1,21 @@
+<wsdl:definitions targetNamespace="http://www.mydomain.com/oagis/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.mydomain.com/oagis/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:message name="SendJMSMessageIn">
+    <wsdl:part name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SendJMSMessageOut">
+    <wsdl:part name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="DummyService">
+    <wsdl:operation name="SendJMSMessage">
+      <wsdl:input message="tns:SendJMSMessageIn"/>
+      <wsdl:output message="tns:SendJMSMessageOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DummyService" type="tns:DummyService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SendJMSMessage"/>
+  </wsdl:binding>
+  <wsdl:service name="DummyService">
+    <wsdl:port name="DummyService" binding="tns:DummyService"/>
+  </wsdl:service>
+</wsdl:definitions>

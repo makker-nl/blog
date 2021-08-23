@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="cc82835c-b895-4715-b457-ac7118388a9b" activeEnvironment="Default" name="AMQTest" resourceRoot="" soapui-version="5.6.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="650afaec-cc61-4f19-9e72-7b4ca355ce6d" wsaVersion="NONE" name="DummyService" type="wsdl" bindingName="{http://www.mydomain.com/oagis/wsdl/}DummyService" soapVersion="1_1" anonymous="optional" definition="file:/D:/Data/SoapUI/DummyService.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/D:/Data/SoapUI/DummyService.wsdl"><con:part><con:url>file:/D:/Data/SoapUI/DummyService.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.mydomain.com/oagis/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.mydomain.com/oagis/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:message name="SendJMSMessageIn">
+    <wsdl:part name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="SendJMSMessageOut">
+    <wsdl:part name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="DummyService">
+    <wsdl:operation name="SendJMSMessage">
+      <wsdl:input message="tns:SendJMSMessageIn"/>
+      <wsdl:output message="tns:SendJMSMessageOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DummyService" type="tns:DummyService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SendJMSMessage"/>
+  </wsdl:binding>
+  <wsdl:service name="DummyService">
+    <wsdl:port name="DummyService" binding="tns:DummyService"/>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints/><con:operation id="92531e62-11a0-44ba-a864-e35030d727c5" isOneWay="false" action="" name="SendJMSMessage" bindingOperationName="SendJMSMessage" type="Request-Response" inputName=""><con:settings/></con:operation></con:interface><con:testSuite id="f3d327a7-03da-4dc6-a0aa-650017a37c0b" name="Message Processing TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="9e1ff371-860a-4ed4-a71b-1714a44cf659" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Message Processing TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="Source Message" id="aff36c23-7fc4-41f5-b4c1-20e02fbeba52" disabled="true"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DummyService</con:interface><con:operation>SendJMSMessage</con:operation><con:request name="Source Message" id="11379974-1d2d-4cc0-bc21-4c01874231da"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="X_ESB_Service" value="TestService"/>
+  <con:entry key="ConversationId" value="5895c073-f94d-4f88-991f-1d1270b68c98"/>
+  <con:entry key="X_ESB_Action" value="DummyAction"/>
+  <con:entry key="MessageId" value="5895c073-f94d-4f88-991f-1d1270b68c98"/>
+</xml-fragment>]]></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:request>&lt;aap>
+  &lt;noot>
+    &lt;mies>Leuk Nederlands XML berichtje.
+  &lt;/noot>
+&lt;/aap></con:request><con:assertion type="SOAP Response" id="3635793b-6cdc-4900-a671-476ed201673a"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="GenerateProperties" id="5c255950-be3d-4844-b772-869e3124bd8e"><con:settings/><con:config><script>def testCase = testRunner.testCase
+def testSuite = testCase.testSuite
+def project = testSuite.project
+//
+def reqTestStepName = testCase.getPropertyValue("requestTestStep");
+def reqTestStep = testCase.testSteps[reqTestStepName]
+def reqHeaders = reqTestStep.testRequest.requestHeaders	
+//
+def setReqHeader(reqHeaders, hdrName, hdrValue){
+  if (reqHeaders.containsKeyIgnoreCase(hdrName) ){
+    reqHeaders.remove(hdrName)
+  } 
+    reqHeaders.put(hdrName, hdrValue)
+}
+//
+def msgId = UUID.randomUUID().toString()
+setReqHeader(reqHeaders, "MessageId", msgId)
+setReqHeader(reqHeaders, "ConversationId", msgId)
+reqTestStep.testRequest.requestHeaders = reqHeaders
+
+</script></con:config></con:testStep><con:testStep type="calltestcase" name="InvokePutAMQMessage" id="b12885b6-e781-4aff-a14a-7d626a377db8"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>d21e23b3-e2b7-4a29-b595-ec705c9ac367</con:targetTestCase><con:properties><con:property><con:name>brokerURL</con:name><con:value>${#Project#brokerURL}</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>${#Project#brokerUser}</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>${#Project#brokerPassword}</con:value></con:property><con:property><con:name>destination</con:name><con:value>${#TestCase#destination}</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>${=testSuite.name}</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>${=testCase.name}</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>${#TestCase#requestTestStep}</con:value></con:property></con:properties><con:returnProperties/><con:runMode>SINGLETON_AND_WAIT</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="CheckIf2Get" id="d3ed7799-7b28-454d-a5de-333935baf27c"><con:settings/><con:config><script>def testCase = testRunner.testCase
+def testSuite = testCase.testSuite
+def project = testSuite.project
+def omgeving=project.properties["Omgeving"].value 
+if( !"local".equals(omgeving)) {
+  log.info("Omgeving not local, so skip Get Resposne")
+  testRunner.gotoStep(testRunner.testCase.getTestStepIndexByName('End'))
+}</script></con:config></con:testStep><con:testStep type="delay" name="WaitForDestination" id="17427d80-b528-492b-90f5-138726a56a8d"><con:settings/><con:config><delay>20000</delay></con:config></con:testStep><con:testStep type="calltestcase" name="InvokeGetAMQMessage" id="f93d477c-0eeb-4ac8-84fe-c0c222556ea8"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>f80a3054-b264-4838-bd00-f49a3771988c</con:targetTestCase><con:properties><con:property><con:name>brokerURL</con:name><con:value>${#Project#brokerURL}</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>${#Project#brokerUser}</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>${#Project#brokerPassword}</con:value></con:property><con:property><con:name>destination</con:name><con:value>${#TestCase#responseDestination}</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>${=testSuite.name}</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>${=testCase.name}</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>${#TestCase#responseTestStep}</con:value></con:property><con:property><con:name>conversationId</con:name></con:property></con:properties><con:returnProperties/><con:runMode>SINGLETON_AND_WAIT</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="End" id="c8b08fb2-dd9a-46a6-9698-dbf5de9796e9"><con:settings/><con:config><script>log.info("Klaar")
+</script></con:config></con:testStep><con:testStep type="request" name="Destination Message" id="43d652a1-63b0-40f6-8e17-49df5cc12fd8" disabled="true"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DummyService</con:interface><con:operation>SendJMSMessage</con:operation><con:request name="Destination Message" id="11379974-1d2d-4cc0-bc21-4c01874231da"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:request/><con:assertion type="SOAP Response" id="3635793b-6cdc-4900-a671-476ed201673a"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>destination</con:name><con:value>testsource.queue</con:value></con:property><con:property><con:name>responseDestination</con:name><con:value>testdestination.queue</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>Source Message</con:value></con:property><con:property><con:name>responseTestStep</con:name><con:value>Destination Message</con:value></con:property></con:properties></con:testCase><con:properties/></con:testSuite><con:testSuite id="9880fcf6-3239-46fa-9a7c-8ff9a69c5bc8" name="Utils TestSuite" disabled="true"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="d21e23b3-e2b7-4a29-b595-ec705c9ac367" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="PutAMQMessage TestCase" searchProperties="true" disabled="true"><con:settings/><con:testStep type="groovy" name="ProduceMessage" id="95fd1d31-90df-47f7-8b67-3fa5acec9d61"><con:settings/><con:config><script>import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.broker.BrokerService;
+import org.apache.activemq.command.ActiveMQDestination;
+import javax.jms.Connection;
+import javax.jms.DeliveryMode;
+import javax.jms.Destination;
+import javax.jms.ExceptionListener;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+//
+def testStep = context.testCase.getTestStepAt(context.getCurrentStepIndex())
+def testCase = testRunner.testCase
+def testSuite = testCase.testSuite
+def project = testSuite.project
+def brokerURL =  testCase.getPropertyValue("brokerURL")
+def brokerUser = testCase.getPropertyValue("brokerUser")
+def brokerPassword = testCase.getPropertyValue("brokerPassword")
+def destinationName = testCase.getPropertyValue("destination")
+def reqTestSuiteName = testCase.getPropertyValue("requestTestSuite")
+def reqTestCaseName = testCase.getPropertyValue("requestTestCase")
+def reqTestStepName = testCase.getPropertyValue("requestTestStep")
+def reqTestSuite = project.testSuites[reqTestSuiteName]
+def reqTestCase = reqTestSuite.testCases[reqTestCaseName]
+def reqTestStep = reqTestCase.testSteps[reqTestStepName]
+def requestMsg = reqTestStep.testRequest.requestContent
+def reqHeaders = reqTestStep.testRequest.requestHeaders
+//
+log.info("Start " + testStep.name)
+// Create a ConnectionFactory
+log.info("Create ConnectionFactory to brokerURL: "+brokerURL+", with brokerUser: "+brokerUser)
+ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerURL)
+connectionFactory.setUserName(brokerUser)
+connectionFactory.setPassword(brokerPassword)
+// Create a Connection
+Connection connection = connectionFactory.createConnection()
+connection.start()
+// Create a Session
+Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+// Create the destination (Topic or Queue)
+Destination destination = session.createQueue(destinationName)
+// Create a MessageProducer from the Session to the Topic or Queue
+MessageProducer producer = session.createProducer(destination)
+producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT)
+// Create a message
+TextMessage message = session.createTextMessage(requestMsg)
+reqHeaders.each{
+  headerValue = it.value.toString()[1..-2] //Strip first and last character, being [], because of that the header is apparently a list/array.	
+  message.setProperty(it.key, headerValue)
+}
+message.setJMSCorrelationID(reqHeaders["ConversationId"])
+
+// Send the message by the producer
+log.info("Send message: "+ message.hashCode() + ", to destination: " + destination + " : " + Thread.currentThread().getName())
+producer.send(message)
+log.info("Message sent, msgid: "+message.getJMSMessageID())
+// Clean up
+session.close()
+connection.close() 
+
+log.info("End "+ testStep.name)</script></con:config></con:testStep><con:properties><con:property><con:name>brokerURL</con:name><con:value>tcp://localhost:61616</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>admin</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>admin</con:value></con:property><con:property><con:name>destination</con:name><con:value>testsource.queue</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>Message Processing TestSuite</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>Message Processing TestCase</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>Source Message</con:value></con:property></con:properties></con:testCase><con:testCase id="f80a3054-b264-4838-bd00-f49a3771988c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetAMQMessage TestCase" searchProperties="true" disabled="true"><con:settings/><con:testStep type="groovy" name="ConsumeMessage" id="b10d43a7-e767-4e8e-9dc3-5e4ec116831c"><con:settings/><con:config><script>import com.eviware.soapui.support.types.StringToStringMap 
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.broker.BrokerService;
+import org.apache.activemq.command.ActiveMQDestination;
+import javax.jms.Connection;
+import javax.jms.DeliveryMode;
+import javax.jms.Destination;
+import javax.jms.ExceptionListener;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
+def testStep = context.testCase.getTestStepAt(context.getCurrentStepIndex())
+def testCase = testRunner.testCase
+def testSuite = testCase.testSuite
+def project = testSuite.project
+def brokerURL =  testCase.getPropertyValue("brokerURL")
+def brokerUser = testCase.getPropertyValue("brokerUser")
+def brokerPassword = testCase.getPropertyValue("brokerPassword")
+def destinationName = testCase.getPropertyValue("destination")
+//
+def reqTestSuiteName = testCase.getPropertyValue("requestTestSuite")
+def reqTestCaseName = testCase.getPropertyValue("requestTestCase")
+def reqTestStepName = testCase.getPropertyValue("requestTestStep")
+def reqTestSuite = project.testSuites[reqTestSuiteName]
+def reqTestCase = reqTestSuite.testCases[reqTestCaseName]
+def reqTestStep = reqTestCase.testSteps[reqTestStepName]
+//
+log.info("Start "+testStep.name)
+def reqHeaders = new StringToStringMap()
+def payload = ""
+//
+//
+def setReqHeader(reqHeaders, hdrName, hdrValue){
+  if (reqHeaders.containsKeyIgnoreCase(hdrName) ){
+    reqHeaders.remove(hdrName)
+  } 
+    reqHeaders.put(hdrName, hdrValue)
+}
+//
+// Create a ConnectionFactory
+log.info("Create ConnectionFactory to brokerURL: "+brokerURL+", with brokerUser: "+brokerUser)
+ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerURL)
+connectionFactory.setUserName(brokerUser)
+connectionFactory.setPassword(brokerPassword)
+// Create a Connection
+Connection connection = connectionFactory.createConnection()
+connection.start()
+
+// Create a Session
+Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+// Create the destination (Topic or Queue)
+Destination destination = session.createQueue(destinationName)
+
+// Create the message consumer
+MessageConsumer consumer = session.createConsumer(destination)
+  
+// Try to receive a message
+Message msg = consumer.receive(5000) 
+if (msg instanceof TextMessage) {
+    TextMessage tm = (TextMessage) msg
+    payload = tm.getText()
+    log.info("Got a message: "+ payload)
+    // List all properties into requestHeaders
+    Enumeration&lt;String> e = (Enumeration&lt;String>) msg.getPropertyNames()
+    while (e.hasMoreElements()) {
+      String name = e.nextElement()
+      setReqHeader(reqHeaders, name, msg.getStringProperty(name))
+    }
+}
+else{
+    payload = "No Message Found!"
+    log.error(payload) 
+}
+reqTestStep.testRequest.requestContent = payload
+reqTestStep.testRequest.requestHeaders = reqHeaders
+
+// Clean up
+session.close()
+connection.close()
+//
+log.info("End "+testStep.name)</script></con:config></con:testStep><con:properties><con:property><con:name>brokerURL</con:name><con:value>tcp://localhost:61616</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>admin</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>admin</con:value></con:property><con:property><con:name>destination</con:name><con:value>testdestination.queue</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>Message Processing TestSuite</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>Message Processing TestCase</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>Destination Message</con:value></con:property><con:property><con:name>conversationId</con:name><con:value xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/></con:property></con:properties></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>Omgeving</con:name><con:value>local</con:value></con:property><con:property><con:name>brokerURL</con:name><con:value>${#Project#broker_${#Project#Omgeving}_URL}</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>${#Project#broker_${#Project#Omgeving}_User}</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>${#Project#broker_${#Project#Omgeving}_Password}</con:value></con:property><con:property><con:name>broker_local_URL</con:name><con:value>tcp://localhost:61616</con:value></con:property><con:property><con:name>broker_local_User</con:name><con:value>admin</con:value></con:property><con:property><con:name>broker_local_Password</con:name><con:value>admin</con:value></con:property><con:property><con:name>broker_test_URL</con:name><con:value>ssl://vstfus001.virtualsciences.local:61616</con:value></con:property><con:property><con:name>broker_test_User</con:name><con:value>admin</con:value></con:property><con:property><con:name>broker_test_Password</con:name><con:value>admin_test</con:value></con:property></con:properties><con:wssContainer><con:crypto><con:source>D:/Data/SoapUI/soapui_trust.jks</con:source><con:password>welcome1</con:password><con:type>TRUSTSTORE</con:type></con:crypto></con:wssContainer><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

@@ -24,11 +24,11 @@
   <con:entry key="ConversationId" value="5895c073-f94d-4f88-991f-1d1270b68c98"/>
   <con:entry key="X_ESB_Action" value="DummyAction"/>
   <con:entry key="MessageId" value="5895c073-f94d-4f88-991f-1d1270b68c98"/>
-</xml-fragment>]]></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:request>&lt;aap>
-  &lt;noot>
-    &lt;mies>Leuk Nederlands XML berichtje.
-  &lt;/noot>
-&lt;/aap></con:request><con:assertion type="SOAP Response" id="3635793b-6cdc-4900-a671-476ed201673a"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="GenerateProperties" id="5c255950-be3d-4844-b772-869e3124bd8e"><con:settings/><con:config><script>def testCase = testRunner.testCase
+</xml-fragment>]]></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:request><![CDATA[<aap>
+  <noot>
+    <mies>Leuk Nederlands XML berichtje.</mies>
+  </noot>
+</aap>]]></con:request><con:assertion type="SOAP Response" id="3635793b-6cdc-4900-a671-476ed201673a"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="GenerateProperties" id="5c255950-be3d-4844-b772-869e3124bd8e"><con:settings/><con:config><script>def testCase = testRunner.testCase
 def testSuite = testCase.testSuite
 def project = testSuite.project
 //

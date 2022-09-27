@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project id="cc82835c-b895-4715-b457-ac7118388a9b" activeEnvironment="Default" name="AMQTest" resourceRoot="" soapui-version="5.5.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="650afaec-cc61-4f19-9e72-7b4ca355ce6d" wsaVersion="NONE" name="DummyService" type="wsdl" bindingName="{http://www.mydomain.com/oagis/wsdl/}DummyService" soapVersion="1_1" anonymous="optional" definition="file:/D:/Data/SoapUI/DummyService.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/D:/Data/SoapUI/DummyService.wsdl"><con:part><con:url>file:/D:/Data/SoapUI/DummyService.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.mydomain.com/oagis/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.mydomain.com/oagis/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<con:soapui-project id="cc82835c-b895-4715-b457-ac7118388a9b" activeEnvironment="Default" name="AMQTest" resourceRoot="" soapui-version="5.7.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="650afaec-cc61-4f19-9e72-7b4ca355ce6d" wsaVersion="NONE" name="DummyService" type="wsdl" bindingName="{http://www.mydomain.com/oagis/wsdl/}DummyService" soapVersion="1_1" anonymous="optional" definition="file:/D:/Data/SoapUI/DummyService.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/D:/Data/SoapUI/DummyService.wsdl"><con:part><con:url>file:/D:/Data/SoapUI/DummyService.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://www.mydomain.com/oagis/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.mydomain.com/oagis/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:message name="SendJMSMessageIn">
     <wsdl:part name="parameters"/>
   </wsdl:message>
@@ -20,10 +20,10 @@
     <wsdl:port name="DummyService" binding="tns:DummyService"/>
   </wsdl:service>
 </wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints/><con:operation id="92531e62-11a0-44ba-a864-e35030d727c5" isOneWay="false" action="" name="SendJMSMessage" bindingOperationName="SendJMSMessage" type="Request-Response" inputName=""><con:settings/></con:operation></con:interface><con:testSuite id="f3d327a7-03da-4dc6-a0aa-650017a37c0b" name="Message Processing TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="9e1ff371-860a-4ed4-a71b-1714a44cf659" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Message Processing TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="Source Message" id="aff36c23-7fc4-41f5-b4c1-20e02fbeba52" disabled="true"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DummyService</con:interface><con:operation>SendJMSMessage</con:operation><con:request name="Source Message" id="11379974-1d2d-4cc0-bc21-4c01874231da"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
-  <con:entry key="X_ESB_Service" value="TestService"/>
-  <con:entry key="ConversationId" value="5895c073-f94d-4f88-991f-1d1270b68c98"/>
+  <con:entry key="ConversationId" value="063640df-5db3-42c4-a83f-a26a4636bbe2"/>
   <con:entry key="X_ESB_Action" value="DummyAction"/>
-  <con:entry key="MessageId" value="5895c073-f94d-4f88-991f-1d1270b68c98"/>
+  <con:entry key="X_ESB_Service" value="TestService"/>
+  <con:entry key="MessageId" value="063640df-5db3-42c4-a83f-a26a4636bbe2"/>
 </xml-fragment>]]></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:request><![CDATA[<aap>
   <noot>
     <mies>Leuk Nederlands XML berichtje.</mies>
@@ -118,7 +118,7 @@ log.info("Message sent, msgid: "+message.getJMSMessageID())
 session.close()
 connection.close() 
 
-log.info("End "+ testStep.name)</script></con:config></con:testStep><con:properties><con:property><con:name>brokerURL</con:name><con:value>tcp://localhost:61616</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>admin</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>admin</con:value></con:property><con:property><con:name>destination</con:name><con:value>testsource.queue</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>Message Processing TestSuite</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>Message Processing TestCase</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>Source Message</con:value></con:property></con:properties></con:testCase><con:testCase id="f80a3054-b264-4838-bd00-f49a3771988c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetAMQMessage TestCase" searchProperties="true" disabled="true"><con:settings/><con:testStep type="groovy" name="ConsumeMessage" id="b10d43a7-e767-4e8e-9dc3-5e4ec116831c"><con:settings/><con:config><script>import com.eviware.soapui.support.types.StringToStringMap 
+log.info("End "+ testStep.name)</script></con:config></con:testStep><con:properties><con:property><con:name>brokerURL</con:name><con:value>amqp://max-amq-broker-amqp-0-svc-rte-dev-max-integration.apps.v2c6zabo.westeurope.aroapp.io:443</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>amqtest</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value/></con:property><con:property><con:name>destination</con:name><con:value>testsource.queue</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>Message Processing TestSuite</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>Message Processing TestCase</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>Source Message</con:value></con:property></con:properties></con:testCase><con:testCase id="f80a3054-b264-4838-bd00-f49a3771988c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="GetAMQMessage TestCase" searchProperties="true" disabled="true"><con:settings/><con:testStep type="groovy" name="ConsumeMessage" id="b10d43a7-e767-4e8e-9dc3-5e4ec116831c"><con:settings/><con:config><script>import com.eviware.soapui.support.types.StringToStringMap 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQDestination;
 import javax.jms.Connection;
@@ -201,4 +201,112 @@ reqTestStep.testRequest.requestHeaders = reqHeaders
 session.close()
 connection.close()
 //
-log.info("End "+testStep.name)</script></con:config></con:testStep><con:properties><con:property><con:name>brokerURL</con:name><con:value>tcp://localhost:61616</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>admin</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>admin</con:value></con:property><con:property><con:name>destination</con:name><con:value>testdestination.queue</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>Message Processing TestSuite</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>Message Processing TestCase</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>Destination Message</con:value></con:property><con:property><con:name>conversationId</con:name><con:value xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/></con:property></con:properties></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>Environment</con:name><con:value>local</con:value></con:property><con:property><con:name>brokerURL</con:name><con:value>${#Project#broker_${#Project#Environment}_URL}</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>${#Project#broker_${#Project#Environment}_User}</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>${#Project#broker_${#Project#Omgeving}_Password}</con:value></con:property><con:property><con:name>broker_local_URL</con:name><con:value>tcp://localhost:61616</con:value></con:property><con:property><con:name>broker_local_User</con:name><con:value>admin</con:value></con:property><con:property><con:name>broker_local_Password</con:name><con:value>admin</con:value></con:property><con:property><con:name>broker_test_URL</con:name><con:value>ssl://vstfus001.virtualsciences.local:61616</con:value></con:property><con:property><con:name>broker_test_User</con:name><con:value>admin</con:value></con:property><con:property><con:name>broker_test_Password</con:name><con:value>admin_test</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+log.info("End "+testStep.name)</script></con:config></con:testStep><con:properties><con:property><con:name>brokerURL</con:name><con:value>tcp://localhost:61616</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>admin</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>admin</con:value></con:property><con:property><con:name>destination</con:name><con:value>testdestination.queue</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>Message Processing TestSuite</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>Message Processing TestCase</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>Destination Message</con:value></con:property><con:property><con:name>conversationId</con:name><con:value xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/></con:property></con:properties></con:testCase><con:testCase id="3be55fbe-7c9f-4fdb-a208-1a8bcc742b4a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="PutAMQPMessage TestCase" searchProperties="true" disabled="true"><con:settings/><con:testStep type="groovy" name="ProduceMessage" id="bc8fd741-da3f-429c-a517-963952892be0"><con:settings/><con:config><script>//import org.apache.qpid.jms.jndi.JmsInitialContextFactory
+import java.util.Hashtable;
+import javax.jms.ConnectionFactory
+import javax.jms.Connection;
+import javax.jms.DeliveryMode;
+import javax.jms.Destination;
+import javax.jms.ExceptionListener;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+//
+def testStep = context.testCase.getTestStepAt(context.getCurrentStepIndex())
+def testCase = testRunner.testCase
+def testSuite = testCase.testSuite
+def project = testSuite.project
+def brokerURL =  testCase.getPropertyValue("brokerURL")
+def brokerUser = testCase.getPropertyValue("brokerUser")
+def brokerPassword = testCase.getPropertyValue("brokerPassword")
+def destinationName = testCase.getPropertyValue("destination")
+def reqTestSuiteName = testCase.getPropertyValue("requestTestSuite")
+def reqTestCaseName = testCase.getPropertyValue("requestTestCase")
+def reqTestStepName = testCase.getPropertyValue("requestTestStep")
+def reqTestSuite = project.testSuites[reqTestSuiteName]
+def reqTestCase = reqTestSuite.testCases[reqTestCaseName]
+def reqTestStep = reqTestCase.testSteps[reqTestStepName]
+def requestMsg = reqTestStep.testRequest.requestContent
+def reqHeaders = reqTestStep.testRequest.requestHeaders
+//
+def Hashtable&lt;String, String> env = new Hashtable&lt;String, String>();
+//
+log.info("Start " + testStep.name)
+// Create a ConnectionFactory
+log.info("Create ConnectionFactory to brokerURL: "+brokerURL+", with brokerUser: "+brokerUser)
+env.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.qpid.jms.jndi.JmsInitialContextFactory");
+env.put("connectionfactory.qpidConnectionFactory", brokerURL);
+Context context = new InitialContext(env);
+//
+//ConnectionFactory connectionFactory = new JmsInitialContextFactory(brokerURL)
+ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("qpidConnectionFactory");
+// Create a Connection
+Connection connection = connectionFactory.createConnection(brokerUser,brokerPassword);
+connection.start()
+// Create a Session
+Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+// Create the destination (Topic or Queue)
+Destination destination = session.createQueue(destinationName)
+// Create a MessageProducer from the Session to the Topic or Queue
+MessageProducer producer = session.createProducer(destination)
+producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT)
+// Create a message
+TextMessage message = session.createTextMessage(requestMsg)
+reqHeaders.each{
+  headerValue = it.value.toString()[1..-2] //Strip first and last character, being [], because of that the header is apparently a list/array.	
+  message.setProperty(it.key, headerValue)
+}
+message.setJMSCorrelationID(reqHeaders["ConversationId"])
+
+// Send the message by the producer
+log.info("Send message: "+ message.hashCode() + ", to destination: " + destination + " : " + Thread.currentThread().getName())
+producer.send(message)
+log.info("Message sent, msgid: "+message.getJMSMessageID())
+// Clean up
+session.close()
+connection.close() 
+
+log.info("End "+ testStep.name)</script></con:config></con:testStep><con:properties><con:property><con:name>brokerURL</con:name><con:value>amqps://max-amq-broker-amqp-0-svc-rte-dev-max-integration.apps.v2c6zabo.westeurope.aroapp.io:443</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>amqtest</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value/></con:property><con:property><con:name>destination</con:name><con:value>testsource.queue</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>AMQP Message Processing TestSuite</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>Message Processing TestCase</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>Source Message</con:value></con:property></con:properties></con:testCase><con:properties/></con:testSuite><con:testSuite id="bf8f5258-6077-4f73-83a1-4118d9393265" name="AMQP Message Processing TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="fe93e30f-614c-44ca-89de-55ba6b0dfdd2" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Message Processing TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="Source Message" id="a60c7af9-85d9-4e63-b414-464ca931398f" disabled="true"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DummyService</con:interface><con:operation>SendJMSMessage</con:operation><con:request name="Source Message" id="11379974-1d2d-4cc0-bc21-4c01874231da"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="ConversationId" value="354968bc-1a75-4055-9601-65d3f5bd9635"/>
+  <con:entry key="X_ESB_Action" value="DummyAction"/>
+  <con:entry key="X_ESB_Service" value="TestService"/>
+  <con:entry key="MessageId" value="354968bc-1a75-4055-9601-65d3f5bd9635"/>
+</xml-fragment>]]></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:request><![CDATA[<aap>
+  <noot>
+    <mies>Leuk Nederlands XML berichtje.</mies>
+  </noot>
+</aap>]]></con:request><con:assertion type="SOAP Response" id="3635793b-6cdc-4900-a671-476ed201673a"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="groovy" name="GenerateProperties" id="c983df2e-0a2f-4835-a138-21612cc0cac3"><con:settings/><con:config><script>def testCase = testRunner.testCase
+def testSuite = testCase.testSuite
+def project = testSuite.project
+//
+def reqTestStepName = testCase.getPropertyValue("requestTestStep");
+def reqTestStep = testCase.testSteps[reqTestStepName]
+def reqHeaders = reqTestStep.testRequest.requestHeaders	
+//
+def setReqHeader(reqHeaders, hdrName, hdrValue){
+  if (reqHeaders.containsKeyIgnoreCase(hdrName) ){
+    reqHeaders.remove(hdrName)
+  } 
+    reqHeaders.put(hdrName, hdrValue)
+}
+//
+def msgId = UUID.randomUUID().toString()
+setReqHeader(reqHeaders, "MessageId", msgId)
+setReqHeader(reqHeaders, "ConversationId", msgId)
+reqTestStep.testRequest.requestHeaders = reqHeaders
+
+</script></con:config></con:testStep><con:testStep type="calltestcase" name="InvokePutAMQMessage" id="27a00efd-dc19-4fb3-a339-8711dcbd065b"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>3be55fbe-7c9f-4fdb-a208-1a8bcc742b4a</con:targetTestCase><con:properties><con:property><con:name>brokerURL</con:name><con:value>${#Project#brokerURL}</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>${#Project#brokerUser}</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>${#Project#brokerPassword}</con:value></con:property><con:property><con:name>destination</con:name><con:value>${#TestCase#destination}</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>${=testSuite.name}</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>${=testCase.name}</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>${#TestCase#requestTestStep}</con:value></con:property></con:properties><con:returnProperties/><con:runMode>SINGLETON_AND_WAIT</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="CheckIf2Get" id="f8111be4-16cf-455b-b828-d21a68c34528"><con:settings/><con:config><script>def testCase = testRunner.testCase
+def testSuite = testCase.testSuite
+def project = testSuite.project
+def environment=project.properties["Environment"].value 
+if( !"local".equals(environment)) {
+  log.info("Environment not local, so skip Get Resposne")
+  testRunner.gotoStep(testRunner.testCase.getTestStepIndexByName('End'))
+}</script></con:config></con:testStep><con:testStep type="delay" name="WaitForDestination" id="40f0fd73-895f-4c9d-b585-75392867a910"><con:settings/><con:config><delay>20000</delay></con:config></con:testStep><con:testStep type="calltestcase" name="InvokeGetAMQMessage" id="9109ea99-19c3-4294-b9b0-4dc85621ddbc"><con:settings/><con:config xsi:type="con:RunTestCaseStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:targetTestCase>f80a3054-b264-4838-bd00-f49a3771988c</con:targetTestCase><con:properties><con:property><con:name>brokerURL</con:name><con:value>${#Project#brokerURL}</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>${#Project#brokerUser}</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>${#Project#brokerPassword}</con:value></con:property><con:property><con:name>destination</con:name><con:value>${#TestCase#responseDestination}</con:value></con:property><con:property><con:name>requestTestSuite</con:name><con:value>${=testSuite.name}</con:value></con:property><con:property><con:name>requestTestCase</con:name><con:value>${=testCase.name}</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>${#TestCase#responseTestStep}</con:value></con:property><con:property><con:name>conversationId</con:name></con:property></con:properties><con:returnProperties/><con:runMode>SINGLETON_AND_WAIT</con:runMode></con:config></con:testStep><con:testStep type="groovy" name="End" id="f0611d41-630b-40c9-9c8f-554ea0afb705"><con:settings/><con:config><script>log.info("Done")
+</script></con:config></con:testStep><con:testStep type="request" name="Destination Message" id="5eba80a5-f498-44dc-857d-6d06b34a5e42" disabled="true"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>DummyService</con:interface><con:operation>SendJMSMessage</con:operation><con:request name="Destination Message" id="11379974-1d2d-4cc0-bc21-4c01874231da"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:request/><con:assertion type="SOAP Response" id="3635793b-6cdc-4900-a671-476ed201673a"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties><con:property><con:name>destination</con:name><con:value>testsource.queue</con:value></con:property><con:property><con:name>responseDestination</con:name><con:value>testdestination.queue</con:value></con:property><con:property><con:name>requestTestStep</con:name><con:value>Source Message</con:value></con:property><con:property><con:name>responseTestStep</con:name><con:value>Destination Message</con:value></con:property></con:properties></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>Environment</con:name><con:value>sandbox</con:value></con:property><con:property><con:name>brokerURL</con:name><con:value>${#Project#broker_${#Project#Environment}_URL}</con:value></con:property><con:property><con:name>brokerUser</con:name><con:value>${#Project#broker_${#Project#Environment}_User}</con:value></con:property><con:property><con:name>brokerPassword</con:name><con:value>${#Project#broker_${#Project#Omgeving}_Password}</con:value></con:property><con:property><con:name>broker_local_URL</con:name><con:value>tcp://localhost:61616</con:value></con:property><con:property><con:name>broker_local_User</con:name><con:value>admin</con:value></con:property><con:property><con:name>broker_local_Password</con:name><con:value>admin</con:value></con:property><con:property><con:name>broker_test_URL</con:name><con:value>ssl://vstfus001.virtualsciences.local:61616</con:value></con:property><con:property><con:name>broker_test_User</con:name><con:value>admin</con:value></con:property><con:property><con:name>broker_test_Password</con:name><con:value>admin_test</con:value></con:property><con:property><con:name>broker_sandbox_URL</con:name><con:value>amqps://dev-amq-broker-amqp-0-svc-rte-dev-integration.apps.hatseflats.westeurope.aroapp.io:443</con:value></con:property><con:property><con:name>broker_sandbox_User</con:name><con:value>amqtest</con:value></con:property><con:property><con:name>broker_sandbox_Password</con:name><con:value>welcome1</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
